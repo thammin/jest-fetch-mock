@@ -6,7 +6,7 @@
  * See https://fetch.spec.whatwg.org/
  */
 
-const { Response, Headers, Request } = require('whatwg-fetch');
+require('whatwg-fetch');
 
 const ActualResponse = Response;
 
@@ -38,20 +38,20 @@ fetch.Headers = Headers;
 fetch.Response = ResponseWrapper;
 fetch.Request = Request;
 fetch.mockResponse = (body, init) => {
-  fetch.mockImplementation(
+  return fetch.mockImplementation(
     () => Promise.resolve(new ResponseWrapper(body, init))
   );
 };
 
 fetch.mockResponseOnce = (body, init) => {
-  fetch.mockImplementationOnce(
+  return fetch.mockImplementationOnce(
     () => Promise.resolve(new ResponseWrapper(body, init))
   );
 };
 
 fetch.mockResponses = (...responses) => {
-  responses.forEach(([ body, init ]) => {
-    fetch.mockImplementationOnce(
+  return responses.map(([ body, init ]) => {
+    return fetch.mockImplementationOnce(
       () => Promise.resolve(new ResponseWrapper(body, init))
     );
   })
